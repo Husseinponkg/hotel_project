@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/girly-style.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome to the Dashboard!</h1>
+        <p>Here is the image based on your selected culture:</p>
+
+        {% if selected_image %}
+            <div class="culture-info">
+                {% if profile.culture_choice %}
+                    <h2>{{ profile.culture_choice }} Culture</h2>
+                {% else %}
+                    <h2>Culture not selected</h2>
+                {% endif %}
+
+                <div class="culture-image">
+                    <h1>hotel</h1>
+                    <img src="{{ selected_image }}" alt="{{ profile.culture_choice }} Image">
+                </div>
+            </div>
+        {% else %}
+            <p>No image available for your selected culture.</p>
+        {% endif %}
+
+        <div class="logout-section">
+            <a href="{% url 'register' %}" class="logout-button">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
