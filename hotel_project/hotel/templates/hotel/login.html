@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Login</title>
     <!-- Link to the CSS file -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/hotel.css' %}">
 </head>
 <body>
-    <h1><center>Register</center></h1>
+    <h1><center>Login</center></h1>
     <form method="post">
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit">Register</button>
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{% url 'dashboard' %}">
+        <button type="submit">Login</button>
     </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
 </body>
 </html>
