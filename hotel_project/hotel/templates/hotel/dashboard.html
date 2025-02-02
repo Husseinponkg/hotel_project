@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/girly-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/9.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
         <h1>Welcome to the Dashboard!</h1>
-        <p>Here is the image based on your selected culture:</p>
+        {% if error_message %}
+            <div class="error">
+                <p>{{ error_message }}</p>
+            </div>
+        {% endif %}
+        <p>Here are the images based on your selected culture:</p>
 
-        {% if selected_image %}
+        {% if selected_images %}
             <div class="culture-info">
                 {% if profile.culture_choice %}
                     <h2>{{ profile.culture_choice }} Culture</h2>
@@ -20,18 +26,41 @@
                     <h2>Culture not selected</h2>
                 {% endif %}
 
-                <div class="culture-image">
-                    <h1>hotel</h1>
-                    <img src="{{ selected_image }}" alt="{{ profile.culture_choice }} Image">
+                <div class="culture-images">
+                    {% for image in selected_images %}
+                        <div class="culture-card">
+                            <img src="{{ image }}" alt="{{ profile.culture_choice }} Image">
+                            <button class="reservation-button" data-image-url="{{ image }}">Make Reservation</button>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% else %}
-            <p>No image available for your selected culture.</p>
+            <p>No images available for your selected culture.</p>
         {% endif %}
 
         <div class="logout-section">
-            <a href="{% url 'register' %}" class="logout-button">Logout</a>
+            <a href="{% url 'register'%}"class="logout-button">logout</a>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.reservation-button').click(function() {
+                var imageUrl = $(this).data('image-url');
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "make_reservation" %}',
+                    data: {
+                        'image_url': imageUrl,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -14,7 +14,19 @@
     <form method="post">
         {% csrf_token %}
         {{ user_form.as_p }}
+        <label for="id_origin">Where are you from?</label>
+        <select name="origin" id="id_origin">
+            <option value="african">Africa</option>
+            <option value="american">America</option>
+            <option value="european">Europe</option>
+            <option value="arabic">Arab</option>
+        </select>
         {{ profile_form.as_p }}
+        {% if profile_form.errors %}
+            <div class="error">
+                {{ profile_form.errors }}
+            </div>
+        {% endif %}
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>

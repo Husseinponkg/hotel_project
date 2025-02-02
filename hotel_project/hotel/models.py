@@ -9,9 +9,15 @@ class Profile(models.Model):
         ('European', 'European'),
         ('Arabic', 'Arabic'),
     ])
+    origin = models.CharField(max_length=20, choices=[
+        ('african', 'Africa'),
+        ('american', 'America'),
+        ('european', 'Europe'),
+        ('arabic', 'Arab'),
+    ], default='african')  # Provide a default value
 
     def __str__(self):
         return self.user.username
 
     class Meta:
-        app_label = 'hotel'  # Explicitly setting the app_label here
+        app_label = 'hotel'

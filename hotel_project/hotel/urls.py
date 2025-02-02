@@ -8,4 +8,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='hotel/login.html'), name='login'),  # Add the login view
+    path('make_reservation/', views.make_reservation, name='make_reservation'),  # Add the reservation view
 ]
